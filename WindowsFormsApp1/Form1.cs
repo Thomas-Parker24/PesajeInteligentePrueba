@@ -12,14 +12,20 @@ namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
-        public Form1()
+        public Form1(Contexto context)
         {
             InitializeComponent();
+            TablaDatos.DataSource = context.Empresas.ToList();
         }
 
-        private void Testing(object sender, EventArgs e)
+        private void label2_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Alerta", "¿Funciona?", MessageBoxButtons.YesNo, MessageBoxIcon.Hand);
+
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

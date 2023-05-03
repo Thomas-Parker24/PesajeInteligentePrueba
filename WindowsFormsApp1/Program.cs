@@ -32,7 +32,7 @@ namespace WindowsFormsApp1
             //context.Empresas.Add(aux);
             //context.SaveChanges();
 
-            Application.Run(new Form1());
+            Application.Run(new Form1(context));
         }
     }
 }
