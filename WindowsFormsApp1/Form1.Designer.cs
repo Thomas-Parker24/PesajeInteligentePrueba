@@ -171,10 +171,10 @@
             this.TituloEditor.AutoSize = true;
             this.TituloEditor.Location = new System.Drawing.Point(334, 19);
             this.TituloEditor.Name = "TituloEditor";
-            this.TituloEditor.Size = new System.Drawing.Size(35, 13);
+            this.TituloEditor.Size = new System.Drawing.Size(124, 13);
             this.TituloEditor.TabIndex = 16;
             this.TituloEditor.Tag = "";
-            this.TituloEditor.Text = "label8";
+            this.TituloEditor.Text = "Creando nueva Empresa";
             // 
             // button5
             // 

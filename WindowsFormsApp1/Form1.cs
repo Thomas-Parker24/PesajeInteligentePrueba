@@ -19,13 +19,12 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
             TablaDatos.DataSource = context.Empresas.ToList();
-            TituloEditor.Text = isNew ? "Creando nueva Empresa" : "Editando Empresa";
         }
 
         private void AgregarButton(object sender, EventArgs e)
         {
             tabControl1.SelectedIndex = 1;
-            isNew = true;
+            TituloEditor.Text = "Creando nueva empresa";
         }
 
         private void CancelarButton(object sender, EventArgs e)
@@ -35,6 +34,7 @@ namespace WindowsFormsApp1
             {
                 tabControl1.SelectedIndex = 0;
                 LimpiarCampos();
+                TituloEditor.Text = "Creando nueva Empresa";
             }
         }
 
@@ -94,6 +94,7 @@ namespace WindowsFormsApp1
                         if (EmpresaEdit != null)
                         {
                             contextoNew.Empresas.AddOrUpdate(nuevaEmpresa);
+                            contextoNew.SaveChanges();
                             MessageBox.Show("Elemento actualizado correctamente", "Confirmación", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         }
@@ -147,13 +148,46 @@ namespace WindowsFormsApp1
                 paisTxt.Text = aux.Pais;
 
                 tabControl1.SelectedIndex = 1;
-                isNew = false;
+                TituloEditor.Text = $"Editando Empresa {aux.Nombre}";
             }
         }
 
         private void EliminarButton(object sender, EventArgs e)
         {
+            int filas = Int16.Parse(TablaDatos.Rows.GetRowCount(DataGridViewElementStates.Selected).ToString());
+            Contexto context = new Contexto(); 
 
+            if (filas <= 0)
+            {
+                MessageBox.Show("Debe seleccionar al menos una fila para proceder", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                for (int x = 0; x < filas; x++)
+                {
+                    string nombre = TablaDatos.SelectedRows[x].Cells[1].Value.ToString();
+                    int id = Int16.Parse(TablaDatos.SelectedRows[x].Cells[0].Value.ToString());
+                    var result = MessageBox.Show($"¿Desea eliminar los registros de la empresa {nombre}?", "Alerta", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        Empresa empresaAux = context.Empresas.Where(U => U.EmpresaID == id).FirstOrDefault();
+
+                        if (empresaAux != null)
+                        {
+                            context.Empresas.Remove(empresaAux);
+                            context.SaveChanges();
+                        }
+
+                        TablaDatos.DataSource = context.Empresas.ToList();
+
+                    }
+                    else
+                    {
+                        MessageBox.Show($"No se eliminó el registro asociado a la empresa {nombre}", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
         }
     }
 }
