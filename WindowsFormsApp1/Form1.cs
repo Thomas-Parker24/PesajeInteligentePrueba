@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Migrations;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -53,6 +54,7 @@ namespace WindowsFormsApp1
             else
             {
                 Empresa nuevaEmpresa = new Empresa();
+                Contexto contextoNew = new Contexto();
 
                 nuevaEmpresa.Nombre = nombreTxt.Text.Trim();
                 nuevaEmpresa.Codigo = codigoInt;
@@ -61,24 +63,53 @@ namespace WindowsFormsApp1
                 nuevaEmpresa.Ciudad = ciudadTxt.Text.Trim();
                 nuevaEmpresa.Departamento = departamentoTxt.Text.Trim();
                 nuevaEmpresa.Pais = paisTxt.Text.Trim();
-                nuevaEmpresa.Creacion = DateTime.Now;
                 nuevaEmpresa.Modificacion = DateTime.Now;
-                
-                try { 
-                    Contexto contextoNew = new Contexto();
-                    contextoNew.Empresas.Add(nuevaEmpresa);
-                    contextoNew.SaveChanges();
 
-                    LimpiarCampos();
-                    MessageBox.Show("Elemento añadido a la base de datos correctamente", "Confirmación", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    tabControl1.SelectedIndex = 0;
-                    TablaDatos.DataSource = contextoNew.Empresas.ToList();
+                if (isNew) {
+                    try
+                    {
+                        nuevaEmpresa.Creacion = DateTime.Now;
+                        contextoNew.Empresas.Add(nuevaEmpresa);
+                        contextoNew.SaveChanges();
+
+                        LimpiarCampos();
+                        MessageBox.Show("Elemento añadido a la base de datos correctamente", "Confirmación", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        
+                    }
+                    catch (Exception)
+                    {
+                        return;
+                    }
                 }
-                catch (Exception)
+                else
                 {
-                    return;
+                    try
+                    {
+                        int IdEmpresa = Int16.Parse(TablaDatos.CurrentRow.Cells[0].Value.ToString());
+
+                        Empresa EmpresaEdit = contextoNew.Empresas.Where(U => U.EmpresaID == IdEmpresa).SingleOrDefault();
+                        nuevaEmpresa.EmpresaID = EmpresaEdit.EmpresaID;
+                        nuevaEmpresa.Creacion = EmpresaEdit.Creacion;
+
+                        if (EmpresaEdit != null)
+                        {
+                            contextoNew.Empresas.AddOrUpdate(nuevaEmpresa);
+                            MessageBox.Show("Elemento actualizado correctamente", "Confirmación", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        }
+
+                    }
+                    catch (Exception)
+                    {
+                        return;
+                    }
+
                 }
-                
+
+                tabControl1.SelectedIndex = 0;
+                TablaDatos.DataSource = contextoNew.Empresas.ToList();
+
+
             }
         }
 
@@ -116,7 +147,13 @@ namespace WindowsFormsApp1
                 paisTxt.Text = aux.Pais;
 
                 tabControl1.SelectedIndex = 1;
+                isNew = false;
             }
+        }
+
+        private void EliminarButton(object sender, EventArgs e)
+        {
+
         }
     }
 }
