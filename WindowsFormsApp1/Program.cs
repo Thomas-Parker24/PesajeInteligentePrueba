@@ -33,6 +33,7 @@ namespace WindowsFormsApp1
             //context.SaveChanges();
 
             Application.Run(new Form1(context));
+
         }
     }
 }
