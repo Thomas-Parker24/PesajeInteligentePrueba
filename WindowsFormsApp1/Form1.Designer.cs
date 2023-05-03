@@ -103,6 +103,7 @@
             this.button2.TabIndex = 3;
             this.button2.Text = "Modificar";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.ModificarButton);
             // 
             // button1
             // 
@@ -125,6 +126,7 @@
             // 
             this.TablaDatos.AllowUserToAddRows = false;
             this.TablaDatos.AllowUserToDeleteRows = false;
+            this.TablaDatos.AllowUserToOrderColumns = true;
             this.TablaDatos.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.TablaDatos.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.RaisedVertical;
             this.TablaDatos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -132,6 +134,7 @@
             this.TablaDatos.Location = new System.Drawing.Point(8, 183);
             this.TablaDatos.Name = "TablaDatos";
             this.TablaDatos.ReadOnly = true;
+            this.TablaDatos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.TablaDatos.Size = new System.Drawing.Size(776, 231);
             this.TablaDatos.TabIndex = 0;
             // 

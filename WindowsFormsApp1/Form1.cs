@@ -63,15 +63,22 @@ namespace WindowsFormsApp1
                 nuevaEmpresa.Pais = paisTxt.Text.Trim();
                 nuevaEmpresa.Creacion = DateTime.Now;
                 nuevaEmpresa.Modificacion = DateTime.Now;
+                
+                try { 
+                    Contexto contextoNew = new Contexto();
+                    contextoNew.Empresas.Add(nuevaEmpresa);
+                    contextoNew.SaveChanges();
 
-                Contexto contextoNew = new Contexto();
-                contextoNew.Empresas.Add(nuevaEmpresa);
-                contextoNew.SaveChanges();
-
-                LimpiarCampos();
-                MessageBox.Show("Elemento añadido a la base de datos correctamente", "Confirmación", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                tabControl1.SelectedIndex = 0;
-                TablaDatos.DataSource = contextoNew.Empresas.ToList();
+                    LimpiarCampos();
+                    MessageBox.Show("Elemento añadido a la base de datos correctamente", "Confirmación", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    tabControl1.SelectedIndex = 0;
+                    TablaDatos.DataSource = contextoNew.Empresas.ToList();
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+                
             }
         }
 
@@ -84,6 +91,32 @@ namespace WindowsFormsApp1
             ciudadTxt.Text = "";
             departamentoTxt.Text = "";
             paisTxt.Text = "";
+        }
+
+        private void ModificarButton(object sender, EventArgs e)
+        {
+            if (TablaDatos.Rows.GetRowCount(DataGridViewElementStates.Selected) > 1)
+            {
+                MessageBox.Show("Solo puede modificar un registro a la vez\nElimine la selección múltiple e intente nuevamente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }else if (TablaDatos.Rows.GetRowCount(DataGridViewElementStates.Selected) == 1)
+            {
+                int empresaID = Int16.Parse(TablaDatos.CurrentRow.Cells[0].Value.ToString());
+                MessageBox.Show("Vas a actualizar la empresa: " + TablaDatos.CurrentRow.Cells[1].Value.ToString(), "Atención", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                Contexto context = new Contexto();
+
+                Empresa aux = context.Empresas.Where(u => u.EmpresaID == empresaID).SingleOrDefault();
+
+                nombreTxt.Text = aux.Nombre;
+                codigoTxt.Text = aux.Codigo.ToString();
+                direccionTxt.Text = aux.Direccion;
+                telefonoTxt.Text = aux.Telefono;
+                ciudadTxt.Text = aux.Ciudad;
+                departamentoTxt.Text = aux.Departamento;
+                paisTxt.Text = aux.Pais;
+
+                tabControl1.SelectedIndex = 1;
+            }
         }
     }
 }
