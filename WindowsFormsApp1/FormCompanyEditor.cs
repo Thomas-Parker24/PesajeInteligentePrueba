@@ -41,7 +41,7 @@ namespace WindowsFormsApp1
             departamentoTxt.Text = aux.Departamento;
             paisTxt.Text = aux.Pais;
 
-            TituloEditor.Text = isNew ? "Creando nueva Empresa" : $"Editando Empresa{nombre}";
+            TituloEditor.Text = isNew ? "Creando nueva Empresa" : $"Editando Empresa {nombre}";
         }
 
         public void LimpiarCampos()
