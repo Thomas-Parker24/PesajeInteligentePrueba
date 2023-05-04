@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCompanyList));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.TabPage = new System.Windows.Forms.TabPage();
             this.label8 = new System.Windows.Forms.Label();
@@ -195,7 +196,6 @@
             this.button5.TabIndex = 15;
             this.button5.Text = "Cancelar";
             this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.CancelarButton);
             // 
             // button4
             // 
@@ -205,7 +205,6 @@
             this.button4.TabIndex = 14;
             this.button4.Text = "Guardar";
             this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.GuardarButton);
             // 
             // label7
             // 
@@ -319,14 +318,16 @@
             this.nombreTxt.Size = new System.Drawing.Size(100, 20);
             this.nombreTxt.TabIndex = 0;
             // 
-            // Form1
+            // FormCompanyList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.tabControl1);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "FormCompanyList";
+            this.Text = "Formulario vista de Empresas";
             this.tabControl1.ResumeLayout(false);
             this.TabPage.ResumeLayout(false);
             this.TabPage.PerformLayout();
