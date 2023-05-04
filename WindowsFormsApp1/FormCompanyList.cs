@@ -135,8 +135,6 @@ namespace WindowsFormsApp1
                 Contexto context = new Contexto();
 
                 Empresa aux = context.Empresas.Where(u => u.EmpresaID == empresaID).SingleOrDefault();
-
-                TituloEditor.Text = $"Editando Empresa {aux.Nombre}";
                 isNew = false;
 
                 Form ActualizarForm = new FormCompanyEditor(empresaID, aux.Nombre ,isNew, aux);

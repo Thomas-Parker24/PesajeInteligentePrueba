@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.Entity.Migrations;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -68,6 +69,7 @@ namespace WindowsFormsApp1
 
         private void GuardarButton(object sender, EventArgs e)
         {
+            bool success = false;
             int codigoInt = 0;
             if (string.IsNullOrEmpty(nombreTxt.Text) || string.IsNullOrEmpty(codigoTxt.Text) || string.IsNullOrEmpty(direccionTxt.Text)
                 || string.IsNullOrEmpty(telefonoTxt.Text) || string.IsNullOrEmpty(ciudadTxt.Text) || string.IsNullOrEmpty(departamentoTxt.Text) ||
@@ -103,6 +105,7 @@ namespace WindowsFormsApp1
 
                         LimpiarCampos();
                         MessageBox.Show("Elemento añadido a la base de datos correctamente", "Confirmación", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        success = true;
 
                     }
                     catch (Exception)
@@ -124,7 +127,7 @@ namespace WindowsFormsApp1
                             contextoNew.Empresas.AddOrUpdate(nuevaEmpresa);
                             contextoNew.SaveChanges();
                             MessageBox.Show("Elemento actualizado correctamente", "Confirmación", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                            success = true;
                         }
 
                     }
@@ -136,7 +139,10 @@ namespace WindowsFormsApp1
                 }
 
             }
-            this.Close();
+            if (success)
+            {
+                this.Close();
+            }
         }
     }
 }
