@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.Entity.Migrations;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,17 +13,20 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace WindowsFormsApp1
 {
-    public partial class Form1 : Form
+    public partial class FormCompanyList : Form
     {
         bool isNew = true;
-        public Form1(Contexto context)
+        public FormCompanyList(Contexto context)
         {
+            this.Text = "Formulario lista de compañías";
             InitializeComponent();
             TablaDatos.DataSource = context.Empresas.ToList();
+            TablaDatos.Columns[0].Visible = false;
         }
 
         private void AgregarButton(object sender, EventArgs e)
         {
+            LimpiarCampos();
             tabControl1.SelectedIndex = 1;
             TituloEditor.Text = "Creando nueva empresa";
         }
@@ -147,8 +151,10 @@ namespace WindowsFormsApp1
                 departamentoTxt.Text = aux.Departamento;
                 paisTxt.Text = aux.Pais;
 
+                LimpiarCampos();
                 tabControl1.SelectedIndex = 1;
                 TituloEditor.Text = $"Editando Empresa {aux.Nombre}";
+                isNew = false;
             }
         }
 
@@ -187,6 +193,20 @@ namespace WindowsFormsApp1
                         MessageBox.Show($"No se eliminó el registro asociado a la empresa {nombre}", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
+            }
+        }
+
+        private void Filtrado(object sender, EventArgs e)
+        {
+            Contexto context = new Contexto();
+
+            if (!string.IsNullOrEmpty(Filtro.Text))
+            {
+                TablaDatos.DataSource = context.Empresas.Where(U => U.Nombre.Contains(Filtro.Text)).ToList();
+            }
+            else
+            {
+                TablaDatos.DataSource = context.Empresas.ToList();
             }
         }
     }

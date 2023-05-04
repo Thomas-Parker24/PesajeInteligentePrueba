@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApp1
 {
-    partial class Form1
+    partial class FormCompanyList
     {
         /// <summary>
         /// Variable del diseñador necesaria.
@@ -30,10 +30,11 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.TabPage = new System.Windows.Forms.TabPage();
+            this.label8 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.Filtro = new System.Windows.Forms.TextBox();
             this.TablaDatos = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.TituloEditor = new System.Windows.Forms.Label();
@@ -53,7 +54,6 @@
             this.codigoTxt = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.nombreTxt = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.TabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TablaDatos)).BeginInit();
@@ -76,7 +76,7 @@
             this.TabPage.Controls.Add(this.button3);
             this.TabPage.Controls.Add(this.button2);
             this.TabPage.Controls.Add(this.button1);
-            this.TabPage.Controls.Add(this.textBox1);
+            this.TabPage.Controls.Add(this.Filtro);
             this.TabPage.Controls.Add(this.TablaDatos);
             this.TabPage.Location = new System.Drawing.Point(4, 22);
             this.TabPage.Name = "TabPage";
@@ -85,6 +85,15 @@
             this.TabPage.TabIndex = 0;
             this.TabPage.Text = "Listado de compañías";
             this.TabPage.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(315, 31);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(156, 13);
+            this.label8.TabIndex = 5;
+            this.label8.Text = "Filtrado por nombre de Empresa";
             // 
             // button3
             // 
@@ -116,12 +125,13 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.AgregarButton);
             // 
-            // textBox1
+            // Filtro
             // 
-            this.textBox1.Location = new System.Drawing.Point(343, 64);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 1;
+            this.Filtro.Location = new System.Drawing.Point(342, 63);
+            this.Filtro.Name = "Filtro";
+            this.Filtro.Size = new System.Drawing.Size(100, 20);
+            this.Filtro.TabIndex = 1;
+            this.Filtro.TextChanged += new System.EventHandler(this.Filtrado);
             // 
             // TablaDatos
             // 
@@ -131,6 +141,7 @@
             this.TablaDatos.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.TablaDatos.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.RaisedVertical;
             this.TablaDatos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.TablaDatos.Cursor = System.Windows.Forms.Cursors.Hand;
             this.TablaDatos.GridColor = System.Drawing.SystemColors.ControlLightLight;
             this.TablaDatos.Location = new System.Drawing.Point(8, 183);
             this.TablaDatos.Name = "TablaDatos";
@@ -308,15 +319,6 @@
             this.nombreTxt.Size = new System.Drawing.Size(100, 20);
             this.nombreTxt.TabIndex = 0;
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(315, 31);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(156, 13);
-            this.label8.TabIndex = 5;
-            this.label8.Text = "Filtrado por nombre de Empresa";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -344,7 +346,7 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox Filtro;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox nombreTxt;
         private System.Windows.Forms.Label label2;
